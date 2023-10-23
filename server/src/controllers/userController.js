@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const userService = require("../services/userService");
+const { isAuth } = require("../middlewares/authMiddleware");
 
 router.post("/register", async (req, res) => {
   try {
@@ -23,8 +24,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/logout", (req, res) => {
-  res.end(); // TODO: check if the token is valid
+router.get("/logout", isAuth, (req, res) => {
+  res.end();
 });
 
 module.exports = router;
