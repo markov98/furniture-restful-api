@@ -19,7 +19,7 @@ exports.auth = (req, res, next) => {
 
 exports.isAuth = (req, res, next) => {
   if (!req.user) {
-      res.redirect('/users/login');
+    res.status(401).json({ message: "You are not authorized!" });
   } else {
       next()
   }
