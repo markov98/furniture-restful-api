@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const furnitureService = require("../services/furnitureService");
+const { isAuth } = require("../middlewares/authMiddleware");
 
 router.get("/", async (req, res) => {
   try {
@@ -11,7 +12,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", isAuth, async (req, res) => {
   try {
     const { description, img, make, material, model, price, year } = req.body;
     await furnitureService.create({
@@ -45,7 +46,7 @@ router.get("/:furnitureId", async (req, res) => {
   }
 });
 
-router.put("/:furnitureId", async (req, res) => {
+router.put("/:furnitureId", isAuth, async (req, res) => {
   try {
     const { furnitureId } = req.params;
     const { description, img, make, material, model, price, year } = req.body;
@@ -68,7 +69,7 @@ router.put("/:furnitureId", async (req, res) => {
   }
 });
 
-router.delete("/:furnitureId", async (req, res) => {
+router.delete("/:furnitureId", isAuth, async (req, res) => {
   try {
     const { furnitureId } = req.params;
     await furnitureService.delete(furnitureId);
